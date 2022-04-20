@@ -2,10 +2,60 @@
 \@writefile{toc}{\contentsline {section}{\numberline {一、\nobreakspace  {}}实验名称: 图像预处理}{1}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {二、\nobreakspace  {}}实验目的:}{1}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {三、\nobreakspace  {}}实验原理:}{1}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {四、\nobreakspace  {}}实验内容:}{1}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {五、\nobreakspace  {}}实验设备:}{1}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {六、\nobreakspace  {}}实验步骤:}{1}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {七、\nobreakspace  {}}实验结果与分析:}{1}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {八、\nobreakspace  {}}总结及心得体会:}{1}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {九、\nobreakspace  {}}对本实验过程及方法、手段的改进建议:}{1}{}\protected@file@percent }
-\gdef \@abspage@last{2}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}边缘检测}{1}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Sobel 算子\relax }}{1}{}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{five}{{1}{1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}角点检测}{1}{}\protected@file@percent }
+\citation{1}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}调研：高斯差分角点检测}{2}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces 不同$\sigma $值下角点检测的结果\relax }}{2}{}\protected@file@percent }
+\newlabel{sigma}{{2}{2}}
+\@writefile{toc}{\contentsline {section}{\numberline {四、\nobreakspace  {}}实验内容:}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {五、\nobreakspace  {}}实验设备:}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {六、\nobreakspace  {}}实验步骤:}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}使用Sobel算子进行图像边缘检测}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}使用SUSAN算子进行角点检测}{5}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}使用DoG算法进行角点检测}{6}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {七、\nobreakspace  {}}实验结果与分析:}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}边缘检测}{7}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces 不同方向的sobel算子处理结果\relax }}{7}{}\protected@file@percent }
+\newlabel{fig:1}{{3}{7}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {x方向Sobel算子}}}{7}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {y方向Sobel算子}}}{7}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {原始图像}}}{7}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces 不同范数梯度图响应结果\relax }}{8}{}\protected@file@percent }
+\newlabel{sobelb}{{4}{8}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {1范数响应}}}{8}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {2范数响应}}}{8}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {无穷范数响应}}}{8}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}角点检测}{8}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.2.1}二值图像中的角点检测结果}{8}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces SUSAN算子二值图像响应结果\relax }}{8}{}\protected@file@percent }
+\newlabel{susan_cuan}{{5}{8}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.2.2}真实图像上的角点检测结果}{9}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces 指定半径下限的SUSAN算子结果\relax }}{9}{}\protected@file@percent }
+\newlabel{susan_obj_1}{{6}{9}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {原始SUSAN}}}{9}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {指定半径下限为4r}}}{9}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces 不同半径范围下的SUSAN算子检测效果\relax }}{9}{}\protected@file@percent }
+\newlabel{susan_obj_2}{{7}{9}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {$r=5$}}}{9}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {$r=10$}}}{9}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.2.3}不同图片的对比}{10}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces 角点检测局部细节\relax }}{10}{}\protected@file@percent }
+\newlabel{su_c}{{8}{10}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {二值角点}}}{10}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {错误检测边缘}}}{10}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {错误检测复杂区域}}}{10}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}DoG算法}{10}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces DoG与SUSAN处理结果对比\relax }}{10}{}\protected@file@percent }
+\newlabel{DoG}{{9}{10}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {DoG处理结果}}}{10}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {SUSAN算子处理结果}}}{10}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {八、\nobreakspace  {}}总结及心得体会:}{10}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {九、\nobreakspace  {}}对本实验过程及方法、手段的改进建议:}{11}{}\protected@file@percent }
+\bibdata{ref}
+\bibcite{1}{1}
+\bibstyle{IEEEtran}
+\gdef \@abspage@last{13}

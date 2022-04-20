@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2021.4.9)  18 APR 2022 22:04
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2021.4.9)  20 APR 2022 13:18
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -924,20 +924,85 @@ Package fontspec Info: Font family 'FandolHei-Regular(1)' created for font
 (fontspec)             <->"[FandolHei-Bold.otf]/OT:language=dflt;mapping=tex-text;"
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
-
-Package caption Warning: Unused \captionsetup[lstlisting] on input line 91.
-See the caption package documentation for explanation.
-
+File: sobel.png Graphic file (type bmp)
+<sobel.png>
 [1
 
-] (./lab_report(zh_cn).aux) ) 
-Here is how much of TeX's memory you used:
- 19535 strings out of 476919
- 394439 string characters out of 5825425
- 953243 words of memory out of 5000000
- 39184 multiletter control sequences out of 15000+600000
- 421397 words of font info for 177 fonts, out of 8000000 for 9000
- 1348 hyphenation exceptions out of 8191
- 101i,8n,104p,1226b,525s stack positions out of 5000i,500n,10000p,200000b,80000s
+]
+File: sigma.png Graphic file (type bmp)
+<sigma.png>
+ [2]
 
-Output written on lab_report(zh_cn).pdf (2 pages).
+Package fontspec Warning: Font "FandolFang-Regular" does not contain requested
+(fontspec)                Script "CJK".
+
+
+Package fontspec Info: Font family 'FandolFang-Regular(0)' created for font
+(fontspec)             'FandolFang-Regular' with options
+(fontspec)             [Mapping=tex-text,Script={CJK},Extension={.otf}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->"[FandolFang-Regular.otf]/OT:language=dflt;mapping=tex-text;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+
+LaTeX Font Info:    Font shape `TU/TimesNewRoman(0)/m/sl' in size <9.03374> not available
+(Font)              Font shape `TU/TimesNewRoman(0)/m/it' tried instead on input line 292.
+[3] [4] [5] [6]
+File: sky_sobel0.png Graphic file (type bmp)
+<sky_sobel0.png>
+File: sky_sobel1.png Graphic file (type bmp)
+<sky_sobel1.png>
+File: sky.png Graphic file (type bmp)
+<sky.png>
+File: sky_sobel2b.png Graphic file (type bmp)
+<sky_sobel2b.png>
+File: sky_sobel3b.png Graphic file (type bmp)
+<sky_sobel3b.png>
+File: sky_sobel4b.png Graphic file (type bmp)
+<sky_sobel4b.png>
+File: susan_cuan.png Graphic file (type bmp)
+<susan_cuan.png>
+ [7]
+File: susan_obj_1_1.png Graphic file (type bmp)
+<susan_obj_1_1.png>
+File: susan_obj_1_2.png Graphic file (type bmp)
+<susan_obj_1_2.png>
+File: susan_obj_2_5.png Graphic file (type bmp)
+<susan_obj_2_5.png>
+File: susan_obj_2_10.png Graphic file (type bmp)
+<susan_obj_2_10.png>
+ [8]
+File: su_c_b.png Graphic file (type bmp)
+<su_c_b.png>
+File: su_c_er.png Graphic file (type bmp)
+<su_c_er.png>
+File: su_c_di.png Graphic file (type bmp)
+<su_c_di.png>
+ [9]
+File: 80.png Graphic file (type bmp)
+<80.png>
+File: susan_obj_1_1.png Graphic file (type bmp)
+<susan_obj_1_1.png>
+ [10]
+
+LaTeX Font Warning: Font shape `TU/SimSun(0)/b/n' undefined
+(Font)              using `TU/SimSun(0)/m/n' instead on input line 664.
+
+[11] (./lab_report(zh_cn).bbl) [12] (./lab_report(zh_cn).aux)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 20113 strings out of 476919
+ 408229 string characters out of 5825425
+ 1286243 words of memory out of 5000000
+ 39711 multiletter control sequences out of 15000+600000
+ 425560 words of font info for 209 fonts, out of 8000000 for 9000
+ 1348 hyphenation exceptions out of 8191
+ 101i,8n,104p,1226b,1564s stack positions out of 5000i,500n,10000p,200000b,80000s
+
+Output written on lab_report(zh_cn).pdf (13 pages).
