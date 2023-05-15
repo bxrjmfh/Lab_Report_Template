@@ -188,7 +188,7 @@
 \cline{2-2}\\
 \xiaoerhao{\hei{姓\qquad 名}}& \xiaoerhao{\hei{李皓}}\\
 \cline{2-2}\\
-\xiaoerhao{\hei{（实验）课程名称}}& \xiaoerhao{\hei{MPI并行程序设计实验}}\\
+\xiaoerhao{\hei{（实验）课程名称}}& \xiaoerhao{\hei{CUDA并行程序设计实验}}\\
 \cline{2-2}\\
 \xiaoerhao{\hei{教师}}& \xiaoerhao{\hei{卢国明}}\\
 \cline{2-2}\\
@@ -212,47 +212,44 @@
 
 \setlength{\parskip}{0bp}  %定义段间距
 
-\section{实验名称: MPI并行程序设计:埃氏素数筛选算法并行及性能优化}
+\section{实验名称: N-Body问题并行程序设计及性能优化}
 % \section{实验学时: ~4}
 \section{实验目的:}
 \begin{enumerate}
-  \item 使用MPI编程实现埃拉托斯特尼筛法并行算法。
-  \item 对程序进行性能分析以及调优。
+  \item 实现N-body的cuda并行算法。
+  \item 使用各种方法对程序进行调优。
 \end{enumerate}
 
 \section{实验原理:}
 
-埃拉托斯特尼是一位古希腊数学家，他在寻找整数$N$以内的素数时，采用了一种与众不同的方法：先将$2-N$的各数写在纸上：
+\subsection{N-Body问题概述}
 
-在$2$的上面画一个圆圈，然后划去$2$的其他倍数；第一个既未画圈又没有被划去的数是$3$，将它画圈，再划去$3$的其他倍数；现在既未画圈又没有被划去的第一个数是$5$，将它画圈，并划去$5$的其他倍数……依此类推，一直到所有小于或等于$N$的各数都画了圈或划去为止。这时，画了圈的以及未划去的那些数正好就是小于$N$的素数。
+N-body问题（或者说N体问题），是一个常见的物理模拟问题。在N-body系统中，每个粒子体都会与剩下的其他粒子产生交互作用（交互作用因具体问题而异），从而产生相应的物理现象。天体模拟就是一个非常经典的N-body系统，根据牛顿的万有引力定律，宇宙中的不同天体之间会产生相互作用的吸引力，吸引力根据两个天体之间的质量和距离的不同而各不相同，一个天体的运动轨迹最终取决于剩下的所有的天体对该天体的引力的合力。
 
-这里，我们把$N$取$120$来举例说明埃拉托斯特尼筛法思想：
+\subsection{N-body问题的CUDA实现}
 
 \begin{enumerate}
-  \item 首先将$2$到$120$写出
-  \item 在$2$上面画一个圆圈，然后划去$2$的其它倍数，这时划去的是除了$2$以外的其它偶数
-  \item 从$2$往后一个数一个数地去找，找到第一个没有被划去的数$3$，将它画圈，再划去$3$的其它倍数（以斜线划去）
-  \item 再从$3$往后一个数一个数地去找，找到第一个没有被划去的数$5$，将它画圈，再划去$5$的倍数（以交叉斜线划去）
-  \item 再往后继续找，可以找到$9$、$11$、$13$、$17$、$19$、$23$、$29$、$31$、$37$、$41$、$43$、$47$，将它们分别画圈，并划去它们的倍数（可以看到，已经没有这样的数了）
-  \item 这时，小于或者等于$120$的各数都画上了圈或者被划去，被画圈的就是素数了。
+  \item 串行算法
+  
+  串行算法只使用了CPU串行计算粒子间引力并更新位置，还未引入CUDA使用GPU并行计算。
+首先，对每个点的位置和速度进行随机初始化。
+然后，根据位置进行计算相互的作用力，以此为依据更新点的速度。
+根据新的速度，更新每个点的位置，然后开始下一个周期的计算。
+
+  \item 并行算法
+  
+  由于在同一周期内计算每一个点的受力情况是相互独立互不影响的，可以利用GPU高达数千核的并行计算特点，用n个线程并发计算速度的变化，每个线程处理一个粒子的计算任务，然后再用n个线程并发更新位置。
+在CUDA编程中，设备端指GPU端，数据存放在显存中；主机端指CPU，数据存放在内存中。一般情况下，设备端是不能直接访问主机端内存的，而数据通常情况下都是存放在主机端内存中，要在GPU中执行算法运算就必须先把数据拷贝至设备端，运算完成再把结果拷回至主机端。
+
 \end{enumerate}
 
 \section{实验内容:}
 
 \begin{enumerate}
-  \item 完成Eratosthenes 筛法实现
-  \item 进行并行程序的优化
+  \item 学习和使用集群及CUDA编译环境
+  \item 基于CUDA实现N-Body 程序并行化
+  \item N-Body并行程序的性能优化
   
-  -安装部署 MPI 实验环境，并调试完成基准代码，实测在不同进程规模（1，2，4，8，16）加速比，并分析原因（40分）。
-
-  -完成优化 1，去除偶数优化，实测在不同进程规模（1，2，4，8，16）加速比，并分析原因（10分）。
-
-  -完成优化 2，消除广播优化，实测在不同进程规模（1，2，4，8，16）加速比，并分析原因（15分）。
-
-  -完成优化 3，cache 优化，实测在不同进程规模（1，2，4，8，16）加速比，并分析原因（10分）。
-
-  -在完成优化 3 的基础上，可以利用课内外知识，全面优化代码性能。根据班优化 3 在目标机上实测性能，最高性能（最短执行时间）得分 25 分，最低性能得 0 分，其他按执行时间进行插值。（25分）
-
 \end{enumerate}
 
 \section{实验设备:}
@@ -263,278 +260,194 @@
   \item 编程环境：vscode
   \item 执行环境：实验室服务器集群
   \item Node-CPU： Intel(R) Xeon(R) Gold 5318Y x2
+  \item GPU： Nvidia K80*2
+  \item 操作系统：CentOS 7.2
+  \item CUDA：10.0
+  \item 内存：64G
+  
 \end{enumerate}
-\section{实验步骤:}
+\section{实验步骤}
 
-\subsection{MPI 环境的配置和基本程序的运行}
-在Windows上下载安装MPI程序，以及最新版本的vs stdio。随后进行环境变量的配置，以及新工程的创建。创建一个新的控制台应用，如下图所示：
+下面进行实验操作：
+\subsection{环境连接和配置}
+为了在cuda机上进行开发，因此需要连接到相应的机器上进行在线配置和链接。首先配置ssh config文件：
+\begin{lstlisting}
+Host CUDA
+  HostName mpi-cu08-1
+  ProxyJump MPI
+  User 2020080903009
+
+Host MPI
+  HostName 121.48.170.9
+  User 2020080903009
+  Port 10022
+\end{lstlisting}
+
+随后进行链接后可以直接打开远程工作区进行开发。如下图所示：
 \begin {figure}[h]
 \centering % 居中显示
-\includegraphics[width=0.7\textwidth]{3509-041319.png}
-\caption{创建新的vs项目} % 标题
+\includegraphics[width=\textwidth]{1602-051421.png}
+\caption{远程开发示例} % 标题
 \label{five}
 \end {figure}
-
 \newpage
- 随后进行环境变量和编译环境的设置，我们的素数筛选程序是一个MPI程序，因此运行时需要添加msmpi库的依赖，添加编译多线程运行的选项。完成上述配置后就可以将原始程序编译通过。
 
-由于途中基准代码的部分变量是int类型，对于测试所需的$10^{10}$大小的数据可能存在溢出的风险。因此需要对原始的数据类型进行修改，如下所示：
-
+利用基本的代码进行性能和环境测试。首先编译代码：
+\begin{lstlisting}
+  2020080903009@mpi-cu08-1: nvcc -arch sm_37 -o s s.cu
+\end{lstlisting}
 \begin {figure}[h]
 \centering % 居中显示
-\includegraphics[width=0.5\textwidth]{4940-041319.png}
-\caption{原始代码数据类型} % 标题
+\includegraphics[width=\textwidth]{2204-051421.png}
+\caption{代码编译运行结果} % 标题
 \label{five}
 \end {figure}
 
-使用int可能会造成溢出，导致结果计算的不正确，经过修改数据类型，以及分块计算的部分（图\ref{2}）后即可编译运行，实测在不同进程规模（1，2，4，8，16）加速比。
+随后运行，测试代码运行的效果：
+
 \begin {figure}[h]
 \centering % 居中显示
-\includegraphics[width=0.5\textwidth]{5541-041319.png}
-\caption{经过修改后的分块计算} % 标题
+\includegraphics[width=\textwidth]{2501-051421.png}
+\caption{基准代码测试结果} % 标题
 \label{five}
 \end {figure}
 
-\subsection{优化I:跳过偶数}
+可见由于使用CPU来进行位置的模拟，只能做到有限的并行，因此程序在一定时间内作出的交互行为有限。接下来的目标就是利用GPU加速运行，使得程序加速。
 
-跳过偶数的思想主要是在于一个朴素的思想：偶数一定不是质数。对于我们的任务而言，计算$N$以内的素数个数，有大约$N/2$的数据不需要进行考虑。这一数据的减少，带来了存储数据的减少，因此需要对数据结构进行重构。在原始的算法中，用于标记素数的数组具有线性映射的关系，正如图（\ref{2}）所示。而现在的数组和实际的素数构成了一个带有倍数关系的映射，原数据从3开始考虑素数的个数，这个数映射到mask的第0号。由于素数不予考虑，数字5映射到数组的第1位。
+\subsection{并行化操作}
 
-根据以上的映射关系，我们构造了从实际序数（ODD）到序号（index）的映射。为了计算的方便，使用宏定义的方式对运算进行替换：
+在计算更新粒子位置的时候，需要根据粒子间的相对位置计算力的大小，得到各个方向的加速度vx,vy,vz，随后更新当前的位置信息。显然，计算加速度的过程中能够并行进行计算，这是因为计算位置的行为没有结果的依赖。只需知道当前粒子的位置和相对的位置，根据万有引力公式计算出该对粒子产生出来的加速度。
+
+为了对此过程进行优化，需要将计算距离的函数 bodyForce 函数，integrate position 函数进行修改，使之成为在cuda设备上计算运行的函数。为了存储结果，还需要在显存中分配空间存储粒子的状态信息。如下是分配显存的部分代码：
+
 \begin{lstlisting}[language=C++]
-  #define ODD_TO_INDEX(odd) (((odd)-3)/2)     
-  #define INDEX_TO_ODD(index) (2*(index)+3)   //对序号进行转换
+  int bytes = nBodies * sizeof(Body);
+  float *buf;
+  // buf = (float *)malloc(bytes);
+  cudaMallocManaged(&buf, bytes);
+  Body *p = (Body*)buf;
 \end{lstlisting}
 
-在经过以上转换后，涉及mask数组的访问就使用index来进行，主要是进行下面的修改：
+使用cudaMalloc命令完成分配，随后分析代码的并行方法。由于每次位置迭代是所有粒子（4096个）都参与运算，因此需要为每个粒子的位置迭代进行线程的分配。受限于显卡的并行架构设计，线程要以线程块的形式分批计算。随后规定进程块的大小和个数：
 
-\begin{enumerate}
-  \item 对于搜寻素数的操作进行重构：
-  
-  改动包括但是不限于将开始的素数由改为3，对循环中的判断操作转化为INDEX的大小比较。改动后的核心代码如下：
-  \begin{lstlisting}[language=C++]
-    if (!id) index = 0;
-    prime = 3;
-    do {
-        if (prime * prime > low_value)
-            first = ODD_TO_INDEX( prime * prime) -ODD_TO_INDEX( low_value);
-            // 从prime*prime 开始找，因为（prime-1）之前的因数已经找过了
-            // 对于分段后的数据而言，是先前一段的内容都被找到了
-        else {
-            if (!(low_value % prime)) 
-                first = 0;
-            // 如果开始的数就是因子的整数倍，那么就从这个开始找
-            else {
-                first = prime - (low_value % prime);
-                if (!((low_value + first)%2)) 
-                    first += prime;           
-                    // 跳过偶数
-                first /= 2;
-                // 映射回index
-            }
-            // 如果不是，则为prime - (low_value % prime)
-            // 假设 low_value 是 10 ，prime 为 3
-            // first 就是 3-1= 2
-            // 对应的就是mark[2]的位置，也就是 10，11，[12] 处
-        }
-        for (i = first; i < size; i += prime) marked[i] = 1;
-        if (!id) {
-            while (marked[++index]);
-            // 找到下一个素数因子
-            prime = INDEX_TO_ODD(index);
-            // 从映射回序数
-            // malloc 中的内容是从 0 开始索引，计算素数从2 开始。
-        }
-        if (p > 1) MPI_Bcast(&prime, 1, MPI_INT, 0, MPI_COMM_WORLD);
-    } while (prime * prime <= n);
-  \end{lstlisting}
-
-  \item 对计数进行修正，由于计算素数个数时忽略所有二的倍数，包括2本身。因此在最后输出的时候需要+1。
-  
-\end{enumerate}
-
-\subsection{优化II：取消并行通信}
-根据课堂的知识：计算过程的并行开销是制约并行程序发展的瓶颈。在原始的代码中，只有0号进程计算了素数，向其余的进程广播之后，其余的进程才能够继续进行计算。期间的通信活动使得程序的并行性能不佳。因此我们对此处进行重构，为每个进程分配一个数组各自进行素数的计算。
-
-主要的改动在于在原始的数组mask之外，再开一个数组marked\_prime来记录需要用到的素数。这个新开数组的大小只需$\sqrt{n}$。
-
-在一个素数标记后，后续的更新不需进行进程的通信，只需要在素数数组中寻找下一个未标记数即可。
-
-\subsection{优化III：cache优化}
-
-cache 优化的思路类似于进行并行化的程序设计。也就是假设原始的数据规模为$n$经过划分后，分配给$p$个进程进行计算。那么每个进程获得了$n/p$的数据。在每个进程中，若需要优化性能，那么可以根据L3-cache的大小进行分段，将数据分为若干段，每一段都和cache的大小相符合。
-
-在进行素数计算时，完成了一段cache的访问后，再整体读取下一段cache，这样可以极大优化程序的局部性，降低cache-miss的比例。
-
-可以使用以下指令获取cache的大小：
-\begin{lstlisting}[language=bash]
-  getconf -a | grep CACHE
+\begin{lstlisting}[language=C++]
+  size_t threadsPerBlock = BLOCK_SIZE;
+  size_t numberOfBlocks = nBodies / threadsPerBlock + 1;
 \end{lstlisting}
 
-在实验室的机器上实验测得：
-\newpage
-\begin {figure}[h]
-\centering % 居中显示
-\includegraphics[width=0.5\textwidth]{5344-041320.png}
-\caption{测试缓存指令} % 标题
-\label{five}
-\end {figure}
-因此我们可以使用这一输出结果来确定数组分片的大小。
+随后进行设备代码的修改，对于bodyForce代码而言，需要先计算出自身进程所对应的索引，这个行为是由块号和块内ID所参与计算的。随后迭代计算即可，该函数和原函数的差异之处在于将外层的循环进行了优化，使得4096个粒子都在并行计算。在调用函数的过程则传入了块数量和每块线程的线程数。代码修改如下：
+\begin{lstlisting}[language=C++]
+// 调用函数
+bodyForce<<<numberOfBlocks,threadsPerBlock>>>(p, dt, nBodies); // compute interbody forces
+// 函数入口
+__global__ void bodyForce(Body *p, float dt, int n) {
+    int i = threadIdx.x + blockDim.x * blockIdx.x;
+    // 取消了i的循环，计算每个进程对应的i
+    float Fx = 0.0f;
+    float Fy = 0.0f;
+    float Fz = 0.0f;
+    if (i<n){
+      
+      for (int j = 0; j < n; j++) {
+        float dx = p[j].x - p[i].x;
+        float dy = p[j].y - p[i].y;
+        float dz = p[j].z - p[i].z;
+        float distSqr = dx*dx + dy*dy + dz*dz + SOFTENING;
+        float invDist = rsqrtf(distSqr);
+        float invDist3 = invDist * invDist * invDist;
+        Fx += dx * invDist3; Fy += dy * invDist3; Fz += dz * invDist3;
+    }
 
-\subsection{优化IV：自由优化}
-在上述的优化过程之外，我们还可以从以下的方法进行代码的重构和加速：
-\begin{enumerate}
-  \item 对素数数组的大小进行调整，使其更为精简。
-  \item 考虑到计算时完成了许多序号到索引的转变，这些转变操作涉及到的乘法和除法可以换为更快的位移运算。
-\end{enumerate}
+    p[i].vx += dt*Fx; p[i].vy += dt*Fy; p[i].vz += dt*Fz;
+    } 
+  }
+\end{lstlisting}
 
-以下为素数程序进行计算的流程图：
-\begin {figure}[h]
-\centering % 居中显示
-\includegraphics[width=\textwidth]{0242-041323.png}
-\caption{埃氏素数筛法流程图} % 标题
-\label{five}
-\end {figure}
+对于粒子的位置更新问题，由于加速度已经计算出来，因此直接计算更新后的位置即可。
 
+\subsection{自由优化}
+
+在完成基本的优化后，代码还有进行调整的空间。在计算各个粒子对之间产生的引力和加速度方面，还是使用了循环遍历所有的粒子。这部分可以进行并行化改进。可以通过分配更多的进程来完成计算，为此，引入变量STEP,每个STEP之间计算引力的行为可以并行操作。
+
+引入STEP后对函数内的循环进行重构，使得每次循环都由原来的$n/BLOCK\_SIZE$次变为了$n/(BLOCK\_SIZE*STEP)$次。通过测试不同的STEP,可以有效加大代码的并行度，提高程序的执行效率。随着并行度的增加，对于加速度累计的情况，需要进行互斥相加的操作，使用函数atomicadd来实现。
+
+该部分代码改动如下：
+\begin{lstlisting}[language=C++]
+  __global__ void bodyForce(Body *p, float dt, int n) {
+    // 计算力的过程并行化
+    int i = threadIdx.x + blockDim.x * (int)(blockIdx.x / STEP);
+    int startBlock = blockIdx.x % STEP;
+    
+    int step_range = n / BLOCK_SIZE;
+    if (i<n){
+      // 设置标志记录 step
+      Body myBody = p[i];
+      __shared__ float3 bdPos[BLOCK_SIZE];
+      // float3 是三个float构成的数据类型，共享以访问
+      float Fx = 0.0f;
+      float Fy = 0.0f;
+      float Fz = 0.0f;
+      // 批量间串行：
+      for (int k = startBlock; k < step_range; k+= STEP){
+        // 同步数据
+        Body temp = p[k * BLOCK_SIZE + threadIdx.x];
+        bdPos[threadIdx.x] = make_float3(temp.x, temp.y, temp.z);
+        // 阻塞等待数据同步
+        __syncthreads();
+        #pragma unroll
+        for (int j = 0; j < BLOCK_SIZE; j++) {
+        float dx = bdPos[j].x - myBody.x;
+        float dy = bdPos[j].y - myBody.y;
+        float dz = bdPos[j].z - myBody.z;
+        // 从自己的块进行访问
+        float distSqr = dx*dx + dy*dy + dz*dz + SOFTENING;
+        float invDist = rsqrtf(distSqr);
+        float invDist3 = invDist * invDist * invDist;
+        Fx += dx * invDist3; Fy += dy * invDist3; Fz += dz * invDist3;
+        }     
+        __syncthreads();
+      }
+
+      atomicAdd(&p[i].vx, dt * Fx);
+      atomicAdd(&p[i].vy, dt * Fy);
+      atomicAdd(&p[i].vz, dt * Fz);
+      // 并行化防止脏操作
+      // p[i].vx += dt*Fx; p[i].vy += dt*Fy; p[i].vz += dt*Fz;
+    }
+  }
+\end{lstlisting}
 
 \section{实验结果与分析:}
-\subsection{基准代码测试}
-基准代码的加速比如下所示：\newpage
-\begin{table}[ht]
-\centering
-\caption{不同进程数下，不同规模下的基准程序加速比}
-\begin{tabular}{cccccccc}
-  \toprule
-  进程数$\backslash$ n & $10^3$             & $10^4$            & $10^5$           & $10^6$          & $10^7$          & $10^8$         & $10^9$         \\\midrule
-  1   & \textbf{1}       & \textbf{1}       & \textbf{1}       & \textbf{1}       & \textbf{1}        & \textbf{1}        & \textbf{1}         \\
-  2   & \textbf{0.13699} & \textbf{0.50813} & \textbf{1.14061} & \textbf{1.35139} & \textbf{1.930511} & \textbf{2.434571} & \textbf{1.7950923} \\
-  4   & \textbf{0.10989} & \textbf{0.30488} & \textbf{1.37152} & \textbf{2.8547}  & \textbf{3.47912}  & \textbf{4.687211} & \textbf{2.9950464} \\
-  8   & \textbf{0.0678}  & \textbf{0.29621} & \textbf{2.19395} & \textbf{6.40209} & \textbf{4.388913} & \textbf{8.180517} & \textbf{5.3209422} \\
-  16  & \textbf{0.01372} & \textbf{0.13034} & \textbf{1.70304} & \textbf{10.6278} & \textbf{16.83087} & \textbf{12.67581} & \textbf{7.417538} \\\bottomrule
-  \end{tabular}
-\label{label}
-  \end{table}
+\subsection{并行化操作结果}
+编译运行并行化的程序后，得到以下结果：
 \begin {figure}[h]
 \centering % 居中显示
-\includegraphics[width=\textwidth]{3535-041410.png}
-\caption{基准程序加速比测试} % 标题
+\includegraphics[width=\textwidth]{0311-051511.png}
+\caption{并行化操作结果} % 标题
 \label{five}
 \end {figure}
 
-分析该程序运行时的加速比可知，就整体趋势而言，加速比随着并行进程数量的增加而增加。在数字大小较小（$<10^5$）时，由于任务本身不重，并行化开销比任务本身的串行开销要大，导致使用多线程时程序的加速比小于1。随着数据n规模的扩大，导致进程之间通信的开销增加，导致加速比回落，但是仍然保持在较高的水平。
-\newpage
-\subsection{优化I:跳过偶数}
-以下为跳过偶数后的程序加速比。
-\begin{table}[ht]
-  \centering
-  \caption{不同进程数下，不同规模下的跳过偶数后的加速比}
-  \begin{tabular}{cccccccc}
-    \toprule
-    进程数$\backslash$ n & $10^3$             & $10^4$            & $10^5$           & $10^6$          & $10^7$          & $10^8$         & $10^9$         \\\midrule
-    1   & \textbf{1}       & \textbf{1}       & \textbf{1}       & \textbf{1}       & \textbf{1}        & \textbf{1}        & \textbf{1}         \\
-    2  & \textbf{0.076142} & \textbf{0.313636} & \textbf{0.978784} & \textbf{1.104057} & \textbf{1.806307} & \textbf{1.9402998} & \textbf{1.90209853} \\
-    4  & \textbf{0.044379} & \textbf{0.146497} & \textbf{1.797403} & \textbf{2.819246} & \textbf{3.755661} & \textbf{3.5750619} & \textbf{2.55833746} \\
-    8  & \textbf{0.038961} & \textbf{0.167883} & \textbf{1.303202} & \textbf{3.660101} & \textbf{7.735794} & \textbf{6.6292152} & \textbf{5.53268197} \\
-    16 & \textbf{0.029644} & \textbf{0.069347} & \textbf{0.773184} & \textbf{3.779198} & \textbf{14.45695} & \textbf{12.497346} & \textbf{6.6352114} \\\bottomrule
-    \end{tabular}
-  \label{label}
-    \end{table}
-  \begin {figure}[h]
-  \centering % 居中显示
-  \includegraphics[width=\textwidth]{4502-041410.png}
-  \caption{去除偶数后的加速比测试} % 标题
-  \label{five}
-  \end {figure}
+和串行操作相比，每秒处理的运动迭代次数提升了227倍，没能够达到更高的提升倍数是因为并行操作的开销，以及函数内还有优化的空间。
 
-与上一次进行对比可以发现，加速比的提升并不明显，而整体的趋势还是保持一致。这是由于消除偶数的行为只是去除了偶数，并且增加了一部分位置映射的计算，较之于并行开销而言，提升并不明显。但是在与基准代码的纵向对比中也可以看出，在同一运行条件下，优化I代码的运行时间平均只有基准代码的一半，带来了数值上的绝对提升。
+\subsection{自由优化结果}
 
-\subsection{优化II：取消并行通信}
-以下为取消并行通信后的程序加速比。
-\begin{table}[ht]
-  \centering
-  \caption{不同进程数下，不同规模下的跳过进程通信后的加速比}
-  \begin{tabular}{cccccccc}
-    \toprule
-    进程数$\backslash$ n & $10^3$             & $10^4$            & $10^5$           & $10^6$          & $10^7$          & $10^8$         & $10^9$         \\\midrule
-    1   & \textbf{1}       & \textbf{1}       & \textbf{1}       & \textbf{1}       & \textbf{1}        & \textbf{1}        & \textbf{1}         \\
-    2  & \textbf{0.714286} & \textbf{0.88}     & \textbf{1.005626} & \textbf{0.615108} & \textbf{1.840823} & \textbf{2.0596689} & \textbf{2.20605995} \\
-    4  & \textbf{0.5}      & \textbf{1.54386}  & \textbf{2.344262} & \textbf{2.987882} & \textbf{3.920519} & \textbf{4.1683542} & \textbf{3.75156371} \\
-    8 & \textbf{0.714286} & \textbf{1.833333} & \textbf{5.070922} & \textbf{6.341564} & \textbf{8.611069} & \textbf{8.556684} & \textbf{6.48140427} \\
-    16 & \textbf{0.438596} & \textbf{0.473118} & \textbf{3.14978}  & \textbf{11.5}     & \textbf{13.20497} & \textbf{14.377272} & \textbf{9.16428213}\\\bottomrule
-    \end{tabular}
-  \label{label}
-    \end{table}
-  \begin {figure}[h]
-  \centering % 居中显示
-  \includegraphics[width=\textwidth]{4854-041410.png}
-  \caption{去除进程通信后的加速比} % 标题
-  \label{five}
-  \end {figure}
-
-在去除并行通信后，并行通信就只有最后汇总计数的开销，通信的次数和数据量都在下降。反映到加速比可知：在n十分大的情况下，加速比的损失降低，这正是优化通信后的结果。
-\newpage
-\subsection{优化III：cache优化}
-
-我们首先使用perf命令来查看优化II中cache的命中情况：
+编译运行文件，得到以下结果：
 \begin {figure}[h]
 \centering % 居中显示
-\includegraphics[width=\textwidth]{5031-041411.png}
-\caption{优化II的cache-miss情况} % 标题
+\includegraphics[width=\textwidth]{3112-051511.png}
+\caption{自由优化后的运行结果} % 标题
 \label{five}
 \end {figure}
 
-由图可知，大约三分之二的cache都处于未命中的状态。这极大制约了程序的效率，我们对程序进行优化后得到以下的加速比：
-
-
-
-\begin{table}[ht]
-  \centering
-  \caption{不同进程数下，不同规模下进行cache优化后的加速比}
-  \begin{tabular}{cccccccc}
-    \toprule
-    进程数$\backslash$ n & $10^3$             & $10^4$            & $10^5$           & $10^6$          & $10^7$          & $10^8$         & $10^9$         \\\midrule
-    1   & \textbf{1}       & \textbf{1}       & \textbf{1}       & \textbf{1}       & \textbf{1}        & \textbf{1}        & \textbf{1}         \\
-    2  & \textbf{1.953856} & \textbf{1.433752} & \textbf{1.872933} & \textbf{1.936872} & \textbf{1.64537}  & \textbf{2.0102914} & \textbf{2.0628349}  \\
-    4  & \textbf{1.982039} & \textbf{3.766319} & \textbf{3.759906} & \textbf{4.144591} & \textbf{4.085892} & \textbf{4.1677506} & \textbf{4.22854376} \\
-    8  & \textbf{7.806353} & \textbf{8.564617} & \textbf{8.893048} & \textbf{9.547098} & \textbf{9.273755} & \textbf{8.9036151} & \textbf{8.62631875} \\
-    16 & \textbf{5.42771}  & \textbf{17.11815} & \textbf{18.04168} & \textbf{19.0874}  & \textbf{6.868363} & \textbf{17.295912} & \textbf{16.7828432}\\\bottomrule
-    \end{tabular}
-  \label{label}
-    \end{table}\newpage
-  \begin {figure}[h]
-  \centering % 居中显示
-  \includegraphics[width=\textwidth]{0628-041411.png}
-  \caption{进行cache优化后的加速比测试} % 标题
-  \label{five}
-  \end {figure}
-
-  可见优化后的程序局部性非常好，在部分p和n的组合下能够达到大于进程数量的加速比。其原因在于优化III限制了访问内存的范围不大于cache,对于计算机而言更有助于进行cache的刷新。由于计算机上不止一个进程在运行，cache的占用状态也有所不同。因此cache带来的加速效果也不稳定，在16个进程的情况下某次测试进程加速比有很大的波动。
-
-\subsection{优化IV：自由优化}
-进行自由优化后，程序的效率了显著提升：
-\begin{table}[ht]
-\centering
-\caption{不同优化下的程序运行时间}
-\begin{tabular}{ccccc}
-\toprule
-进程数$\backslash$ 优化& base              & 优化1               & 优化2               & 优化3               \\\midrule
-$10^{9}$  & \textbf{1.654583} & \textbf{1.564225} & \textbf{1.501048} & \textbf{0.54903}  \\
-$10^{10}$ & \textbf{23}       & \textbf{14.86948} & \textbf{14.06185} & \textbf{4.878388} \\ 
-
-\bottomrule
-  \end{tabular}
-\label{label}
-  \end{table}
-
-  在同一运行条件下，优化3较之于基准代码快了近5倍，反映出对并行程序的合理设计的加速效果。
-
+在之前的基础上通过分配更多的线程来完成并行计算的任务，速度提升了五倍。还使用了共享内存的方法来加速访问的效率，取得了较好效果。
 \section{总结及心得体会:}
 
-在本次实验中，我基本掌握和复现了MPI并行程序设计的方法。并且通过四次程序的优化，直观认识了不同性能优化方法的效果以及特点。
+在本次实验中，我基本掌握了CUDA并行程序设计的方法。并且通过两次程序的优化，直观认识了不同性能优化方法的效果以及特点。
 
 经过这次实验我对并行程序设计的优化有了新的认识，在后续的实践中可以对这些技巧灵活应用。
 
 \section{对本实验过程及方法、手段的改进建议:}
-在实验时需要一些代码调优的工具，如perf和tau等，但是网上似乎没有相应的资源，导致瓶颈分析困难。
+在实验时需要对于CUDA的原理有更加深刻和直观的理解，需要在进行加强。
 
 \vspace{4cm}
 \begin{flushright}
@@ -550,18 +463,12 @@ $10^{10}$ & \textbf{23}       & \textbf{14.86948} & \textbf{14.06185} & \textbf{
 
 \newpage\section{代码清单}
 \begin{enumerate}
-  \item 代码I
+  \item 代码I:CUDA并行
   
   \lstinputlisting[language=C++,linewidth=\textwidth]{o1.cpp}
-  \item 代码II
+  \item 代码II：优化
   
   \lstinputlisting[language=C++,linewidth=\textwidth]{o2}
-  \item 代码III
-  
-  \lstinputlisting[language=C++,linewidth=\textwidth]{o3}
-  \item 代码IV
-  
-  \lstinputlisting[language=C++,linewidth=\textwidth]{o4}
 \end{enumerate}
 
 \end{document}

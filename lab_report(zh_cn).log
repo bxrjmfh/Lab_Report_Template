@@ -1,10 +1,10 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.3.10)  14 APR 2023 12:44
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.3.10)  15 MAY 2023 13:09
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**c:/Users/BXRJ_MFH_DESK/vscode/Lab_Report_Template/lab_report(zh_cn).tex
-(c:/Users/BXRJ_MFH_DESK/vscode/Lab_Report_Template/lab_report(zh_cn).tex
+**c:/Users/BXRJ_MFH_DESK/vscode/CUDA实验/lab_report(zh_cn).tex
+(c:/Users/BXRJ_MFH_DESK/vscode/CUDA实验/lab_report(zh_cn).tex
 LaTeX2e <2021-11-15> patch level 1
 L3 programming layer <2022-02-24> (c:/texlive/2022/texmf-dist/tex/latex/ctex/ctexart.cls (c:/texlive/2022/texmf-dist/tex/latex/ctex/config/ctexbackend.cfg
 File: ctexbackend.cfg 2021/12/12 v2.5.8 Backend configuration file (CTEX)
@@ -727,33 +727,6 @@ LaTeX Warning: Label `five' multiply defined.
 
 LaTeX Warning: Label `five' multiply defined.
 
-
-LaTeX Warning: Label `five' multiply defined.
-
-
-LaTeX Warning: Label `label' multiply defined.
-
-
-LaTeX Warning: Label `five' multiply defined.
-
-
-LaTeX Warning: Label `label' multiply defined.
-
-
-LaTeX Warning: Label `five' multiply defined.
-
-
-LaTeX Warning: Label `five' multiply defined.
-
-
-LaTeX Warning: Label `label' multiply defined.
-
-
-LaTeX Warning: Label `five' multiply defined.
-
-
-LaTeX Warning: Label `label' multiply defined.
-
 )
 \openout1 = `lab_report(zh_cn).aux'.
 
@@ -1003,102 +976,59 @@ Package fontspec Info: Font family 'FangSong(0)' created for font 'FangSong'
 (fontspec)             <->"FangSong/OT:script=hani;language=dflt;mapping=tex-text;"
 (fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
 
- [1
+
+Overfull \hbox (6.22404pt too wide) in paragraph at lines 234--238
+[]\TU/SimSun(1)/m/n/12.045 串 行 算 法 只 使 用 了 \TU/TimesNewRoman(0)/m/n/12.045 CPU \TU/SimSun(1)/m/n/12.045 串 行 计 算 粒 子 间 引 力 并 更 新 位 置，|  还 未 引 入 \TU/TimesNewRoman(0)/m/n/12.045 CUDA
+ []
+
+[1
 
 ]
-File: 3509-041319.png Graphic file (type bmp)
-<3509-041319.png>
+File: 1602-051421.png Graphic file (type bmp)
+<1602-051421.png>
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [2]
-File: 4940-041319.png Graphic file (type bmp)
-<4940-041319.png>
-
-
-LaTeX Warning: Reference `2' on page 3 undefined on input line 290.
-
-File: 5541-041319.png Graphic file (type bmp)
-<5541-041319.png>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-LaTeX Warning: Reference `2' on page 3 undefined on input line 300.
-
-[3] (c:/texlive/2022/texmf-dist/tex/latex/listings/lstlang1.sty
+File: 2204-051421.png Graphic file (type bmp)
+<2204-051421.png>
+File: 2501-051421.png Graphic file (type bmp)
+<2501-051421.png>
+ [3] (c:/texlive/2022/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2020/03/24 1.8d listings language file
 ) (c:/texlive/2022/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2020/03/24 1.8d listings language file
 ) (c:/texlive/2022/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
-) [4] (c:/texlive/2022/texmf-dist/tex/latex/listings/lstlang1.sty
-File: lstlang1.sty 2020/03/24 1.8d listings language file
-) (c:/texlive/2022/texmf-dist/tex/latex/listings/lstlang1.sty
-File: lstlang1.sty 2020/03/24 1.8d listings language file
-) [5]
-File: 5344-041320.png Graphic file (type bmp)
-<5344-041320.png>
-File: 0242-041323.png Graphic file (type bmp)
-<0242-041323.png>
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[6] [7]
-Overfull \hbox (21.52486pt too wide) in paragraph at lines 405--415
- [][] 
+) [4]
+Overfull \hbox (35.92882pt too wide) in paragraph at lines 372--373
+[]\TU/SimSun(1)/m/n/12.045 引 入 \TU/TimesNewRoman(0)/m/n/12.045 STEP \TU/SimSun(1)/m/n/12.045 后 对 函 数 内 的 循 环 进 行 重 构，|  使 得 每 次 循 环 都 由 原 来 的 $\OML/cmm/m/it/12.045 n\OT1/cmr/m/n/12.045 /\OML/cmm/m/it/12.045 BLOCK[]SIZE$
  []
 
-File: 3535-041410.png Graphic file (type bmp)
-<3535-041410.png>
-[8]
-Overfull \hbox (57.65988pt too wide) in paragraph at lines 430--440
- [][] 
- []
-
-File: 4502-041410.png Graphic file (type bmp)
-<4502-041410.png>
-
-Overfull \hbox (57.65988pt too wide) in paragraph at lines 455--465
- [][] 
- []
-
-File: 4854-041410.png Graphic file (type bmp)
-<4854-041410.png>
-[9] [10]
-File: 5031-041411.png Graphic file (type bmp)
-<5031-041411.png>
-
-Overfull \hbox (57.65988pt too wide) in paragraph at lines 492--502
- [][] 
- []
-
-[11]
-File: 0628-041411.png Graphic file (type bmp)
-<0628-041411.png>
- [12]
+[5]
+File: 0311-051511.png Graphic file (type bmp)
+<0311-051511.png>
+File: 3112-051511.png Graphic file (type bmp)
+<3112-051511.png>
+ [6]
 File: 3341-041412.png Graphic file (type bmp)
 <3341-041412.png>
- [13] (./o1.cpp
+ [7] (./o1.cpp
 LaTeX Font Info:    Font shape `TU/TimesNewRoman(0)/m/sl' in size <9.03374> not available
-(Font)              Font shape `TU/TimesNewRoman(0)/m/it' tried instead on input line 1.
- [14] [15]) (./o2 [16] [17]) (./o3 [18] [19] [20]) (./o4 [21] [22] [23]) [24] (./lab_report(zh_cn).aux)
-
-LaTeX Warning: There were undefined references.
-
+(Font)              Font shape `TU/TimesNewRoman(0)/m/it' tried instead on input line 4.
+ [8] [9]) (./o2 [10] [11] [12]) [13] (./lab_report(zh_cn).aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 21551 strings out of 476179
- 445727 string characters out of 5813072
- 1485244 words of memory out of 5000000
- 41902 multiletter control sequences out of 15000+600000
- 488932 words of font info for 188 fonts, out of 8000000 for 9000
+ 21404 strings out of 476179
+ 439182 string characters out of 5813072
+ 1445953 words of memory out of 5000000
+ 41769 multiletter control sequences out of 15000+600000
+ 488924 words of font info for 187 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 89i,12n,97p,1280b,1837s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 89i,8n,97p,1267b,1852s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on lab_report(zh_cn).xdv (25 pages, 719512 bytes).
+Output written on lab_report(zh_cn).xdv (14 pages, 372572 bytes).

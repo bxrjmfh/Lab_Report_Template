@@ -1,21 +1,16 @@
 # Fdb version 3
-["xdvipdfmx"] 1681447481 "lab_report(zh_cn).xdv" "lab_report(zh_cn).pdf" "lab_report(zh_cn)" 1681447483
-  "lab_report(zh_cn).xdv" 1681447481 719512 57dd92118517aed606f0e4f257c8b18b "xelatex"
+["xdvipdfmx"] 1684127391 "lab_report(zh_cn).xdv" "lab_report(zh_cn).pdf" "lab_report(zh_cn)" 1684127392
+  "lab_report(zh_cn).xdv" 1684127391 372572 35dafc83a605d712b80a163dab1dd6b0 "xelatex"
   (generated)
   "lab_report(zh_cn).pdf"
-["xelatex"] 1681447478 "c:/Users/BXRJ_MFH_DESK/vscode/Lab_Report_Template/lab_report(zh_cn).tex" "lab_report(zh_cn).xdv" "lab_report(zh_cn)" 1681447483
-  "0242-041323.png" 1681398162 33027 152591f3070a97f7e28494f4c8019b7c ""
-  "0628-041411.png" 1681441588 15264 ced09c092ed905ba6c1037e78862a01f ""
+["xelatex"] 1684127388 "c:/Users/BXRJ_MFH_DESK/vscode/CUDA实验/lab_report(zh_cn).tex" "lab_report(zh_cn).xdv" "lab_report(zh_cn)" 1684127392
+  "0311-051511.png" 1684119791 41227 749f7a554019b11ea48830519d67c747 ""
+  "1602-051421.png" 1684070162 157029 73a67654f8b572a84ee6f5bf9e6457b9 ""
+  "2204-051421.png" 1684070525 8049 0d2f39ca01f64bb387d0645e5dfa0e74 ""
+  "2501-051421.png" 1684070701 7409 e27a1227acb8cabb31e8e84139956256 ""
+  "3112-051511.png" 1684121473 16535 d2f879ed42fa218b15043fdba5d7b806 ""
   "3341-041412.png" 1681446821 3973 db9302a36424eb3f08c22f1d3d7a235b ""
-  "3509-041319.png" 1681385709 75598 ba752d647e17c4ecfadf335b8f5d6afb ""
-  "3535-041410.png" 1681439735 20049 5d0f80979ca20d20b0f27ea85ebc9489 ""
-  "4502-041410.png" 1681440303 19042 e81d03fd1c69398b9966c84f56ceeff3 ""
-  "4854-041410.png" 1681440535 19582 c7d034471595ded15d437b7e1861f453 ""
-  "4940-041319.png" 1681386580 43016 32c42ad357b75bc9d92a90243ca18867 ""
-  "5031-041411.png" 1681444231 92964 b8befd550e8c1153979c65aed6e33408 ""
-  "5344-041320.png" 1681390424 12865 caa1c267f08c3cebdbbe446bc4028f30 ""
-  "5541-041319.png" 1681386941 7953 e26eff888d1855e839d331c7d00798ad ""
-  "c:/Users/BXRJ_MFH_DESK/vscode/Lab_Report_Template/lab_report(zh_cn).tex" 1681447435 29488 9c4414f6fdc68f8002f4a074627ae1b7 ""
+  "c:/Users/BXRJ_MFH_DESK/vscode/CUDA实验/lab_report(zh_cn).tex" 1684127388 21065 d29ba179e0d6d49820b1eed8c1251f15 ""
   "c:/Windows/Fonts/msyh.ttc" 1651900759 19647736 ff2e53a6131130a07589812ea5b5b0d0 ""
   "c:/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1678436992 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy7.tfm" 1678436514 1120 7f9f170e8aa57527ad6c49feafd45d54 ""
@@ -136,12 +131,10 @@
   "c:/texlive/2022/texmf-dist/web2c/texmf.cnf" 1678436477 40171 cdab547de63d26590bebb3baff566530 ""
   "c:/texlive/2022/texmf-var/web2c/xetex/xelatex.fmt" 1678438294 5419772 e030f3a65b826e5b7932024d8f24d0c4 ""
   "c:/texlive/2022/texmf.cnf" 1678438197 713 e69b156964470283e0530f5060668171 ""
-  "lab_report(zh_cn).aux" 1681447481 5561 783581adf70515fe135ff3f46a43bde0 "xelatex"
-  "lab_report(zh_cn).tex" 1681447435 29488 9c4414f6fdc68f8002f4a074627ae1b7 ""
-  "o1.cpp" 1681447325 5046 6e77c788d816dc6f3a790c4256f27c37 ""
-  "o2" 1681447366 5619 d274356f9412706e03b543efdbc2842c ""
-  "o3" 1681447397 6283 a86454331cb01959aa3757836b7292ca ""
-  "o4" 1681447451 7525 3823450acccf191734a648dc2b6c9a83 ""
+  "lab_report(zh_cn).aux" 1684127391 3157 2e923425c5e82b325d168bb8ea04cf27 "xelatex"
+  "lab_report(zh_cn).tex" 1684127388 21065 d29ba179e0d6d49820b1eed8c1251f15 ""
+  "o1.cpp" 1684119214 4419 d42ea154005577b2e53c2c08be13fe0a ""
+  "o2" 1684119223 5375 c7850ec47880cd7810c39d4b90a6d6c4 ""
   (generated)
   "lab_report(zh_cn).aux"
   "lab_report(zh_cn).log"

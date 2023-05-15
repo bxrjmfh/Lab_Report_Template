@@ -1,57 +1,32 @@
 \relax 
-\@writefile{toc}{\contentsline {section}{\numberline {一、\nobreakspace  {}}实验名称: MPI并行程序设计:埃氏素数筛选算法并行及性能优化}{1}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {一、\nobreakspace  {}}实验名称: N-Body问题并行程序设计及性能优化}{1}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {二、\nobreakspace  {}}实验目的:}{1}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {三、\nobreakspace  {}}实验原理:}{1}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}N-Body问题概述}{1}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}N-body问题的CUDA实现}{1}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {四、\nobreakspace  {}}实验内容:}{2}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {五、\nobreakspace  {}}实验设备:}{2}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {六、\nobreakspace  {}}实验步骤:}{2}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}MPI 环境的配置和基本程序的运行}{2}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces 创建新的vs项目\relax }}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {六、\nobreakspace  {}}实验步骤}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}环境连接和配置}{2}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces 远程开发示例\relax }}{3}{}\protected@file@percent }
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{five}{{1}{3}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces 原始代码数据类型\relax }}{3}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces 代码编译运行结果\relax }}{3}{}\protected@file@percent }
 \newlabel{five}{{2}{3}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces 经过修改后的分块计算\relax }}{4}{}\protected@file@percent }
-\newlabel{five}{{3}{4}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}优化I:跳过偶数}{4}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}优化II：取消并行通信}{5}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}优化III：cache优化}{5}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces 测试缓存指令\relax }}{6}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces 基准代码测试结果\relax }}{3}{}\protected@file@percent }
+\newlabel{five}{{3}{3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}并行化操作}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}自由优化}{5}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {七、\nobreakspace  {}}实验结果与分析:}{6}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}并行化操作结果}{6}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces 并行化操作结果\relax }}{6}{}\protected@file@percent }
 \newlabel{five}{{4}{6}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.5}优化IV：自由优化}{6}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces 埃氏素数筛法流程图\relax }}{7}{}\protected@file@percent }
-\newlabel{five}{{5}{7}}
-\@writefile{toc}{\contentsline {section}{\numberline {七、\nobreakspace  {}}实验结果与分析:}{7}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}基准代码测试}{7}{}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces 不同进程数下，不同规模下的基准程序加速比\relax }}{8}{}\protected@file@percent }
-\newlabel{label}{{1}{8}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces 基准程序加速比测试\relax }}{8}{}\protected@file@percent }
-\newlabel{five}{{6}{8}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}优化I:跳过偶数}{9}{}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces 不同进程数下，不同规模下的跳过偶数后的加速比\relax }}{9}{}\protected@file@percent }
-\newlabel{label}{{2}{9}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces 去除偶数后的加速比测试\relax }}{9}{}\protected@file@percent }
-\newlabel{five}{{7}{9}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}优化II：取消并行通信}{10}{}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces 不同进程数下，不同规模下的跳过进程通信后的加速比\relax }}{10}{}\protected@file@percent }
-\newlabel{label}{{3}{10}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces 去除进程通信后的加速比\relax }}{10}{}\protected@file@percent }
-\newlabel{five}{{8}{10}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.4}优化III：cache优化}{11}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces 优化II的cache-miss情况\relax }}{11}{}\protected@file@percent }
-\newlabel{five}{{9}{11}}
-\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces 不同进程数下，不同规模下进行cache优化后的加速比\relax }}{11}{}\protected@file@percent }
-\newlabel{label}{{4}{11}}
-\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces 进行cache优化后的加速比测试\relax }}{12}{}\protected@file@percent }
-\newlabel{five}{{10}{12}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.5}优化IV：自由优化}{12}{}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces 不同优化下的程序运行时间\relax }}{12}{}\protected@file@percent }
-\newlabel{label}{{5}{12}}
-\@writefile{toc}{\contentsline {section}{\numberline {八、\nobreakspace  {}}总结及心得体会:}{13}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {九、\nobreakspace  {}}对本实验过程及方法、手段的改进建议:}{13}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {十、\nobreakspace  {}}代码清单}{14}{}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{o1.cpp}{14}{}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{o2}{16}{}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{o3}{18}{}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{o4}{21}{}\protected@file@percent }
-\gdef \@abspage@last{25}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}自由优化结果}{6}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces 自由优化后的运行结果\relax }}{6}{}\protected@file@percent }
+\newlabel{five}{{5}{6}}
+\@writefile{toc}{\contentsline {section}{\numberline {八、\nobreakspace  {}}总结及心得体会:}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {九、\nobreakspace  {}}对本实验过程及方法、手段的改进建议:}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {十、\nobreakspace  {}}代码清单}{8}{}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{o1.cpp}{8}{}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{o2}{10}{}\protected@file@percent }
+\gdef \@abspage@last{14}
