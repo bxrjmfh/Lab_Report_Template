@@ -1,0 +1,351 @@
+我会给你几份材料，你应该基于材料为我写一份 latex 格式的实验报告，材料包含：
+1. 实验内容
+
+任务1 低照度图像增强
+
+- 直方图均衡化（Histogram Equalization） 亮度上的差距太大，导致画面整体过曝
+- 自适应直方图均衡化（CLAHE） 分块处理之后的效果不错，暗部保留细节，亮部没有过曝，但是存在界限上的差异
+- 基于伽马校正（Gamma Correction）
+
+2. Latex 实验报告模板（仅仅包含章节）
+
+\section{实验名称: xx}
+% \section{实验学时: ~4}
+\section{实验目的:}
+
+\section{实验原理:}
+
+\section{实验内容:}
+
+\section{实验设备:}
+
+\section{实验步骤:}
+
+\section{实验结果与分析:}
+
+\section{总结及心得体会:}
+
+\section{对本实验过程及方法、手段的改进建议:}
+
+3. 源代码，实现了所有的算法，基于出现的算法补充Latex实验报告，体现逐步探索和对比的过程
+
+file_1: clane_yuv
+
+import cv2
+import numpy as np
+
+def clahe_yuv_enhancement(image_path, output_path, clip_limit=2.0, tile_grid_size=(4, 4)):
+    """
+    在YUV色彩空间中使用CLAHE方法进行图像增强
+    
+    参数:
+        image_path: 输入图像路径
+        output_path: 输出图像路径
+        clip_limit: CLAHE的对比度限制参数，默认为2.0
+        tile_grid_size: CLAHE的网格大小，默认为8x8
+    """
+    # 读取图像
+    img = cv2.imread(image_path)
+    
+    if img is None:
+        print(f"无法读取图像: {image_path}")
+        return
+    
+    # 将图像从BGR转换为YUV颜色空间
+    img_yuv = cv2.cvtColor(img, cv2.COLOR_BGR2YUV)
+    y, u, v = cv2.split(img_yuv)
+    
+    # 创建CLAHE对象
+    clahe = cv2.createCLAHE(clipLimit=clip_limit, tileGridSize=tile_grid_size)
+    
+    # 对Y通道应用CLAHE
+    y_clahe = clahe.apply(y) 
+    # 合并通道
+    img_yuv_enhanced = cv2.merge([y_clahe, u, v])
+    img_enhanced = cv2.cvtColor(img_yuv_enhanced, cv2.COLOR_YUV2BGR)
+    
+    # 保存结果图像
+    cv2.imwrite(output_path, img_enhanced)
+    print(f"处理后的图像已保存到: {output_path}")
+    
+    return img_enhanced
+
+def main():
+    input_images = ["./low_light_1.jpg", "./low_light_2.jpg"]
+    output_images = ["ll_res_1.2_yuv.png", "ll_res_2.2_yuv.png"]
+    
+    # 处理每个图像
+    for i, (input_path, output_path) in enumerate(zip(input_images, output_images)):
+        print(f"处理图像 {i+1}/{len(input_images)}: {input_path}")
+        clahe_yuv_enhancement(input_path, output_path)
+
+if __name__ == "__main__":
+    main()
+
+file_2: 1.gamma_adapt.py
+
+import cv2
+import numpy as np
+import os
+import matplotlib.pyplot as plt
+
+def adaptive_gamma_correction(image_path, output_path, gamma_min=1.0, gamma_max=2.5, 
+                             use_histogram=True, show_result=False):
+    """
+    使用自适应伽马矫正方法增强低光照图像
+    
+    参数:
+        image_path: 输入图像路径
+        output_path: 输出图像路径
+        gamma_min: 最小伽马值
+        gamma_max: 最大伽马值
+        use_histogram: 是否使用直方图分析来确定伽马值
+        show_result: 是否显示处理前后的对比图
+    """
+    # 读取图像
+    img = cv2.imread(image_path)
+    if img is None:
+        print(f"无法读取图像: {image_path}")
+        return None
+    
+    # 转换为灰度图用于计算亮度统计
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    mean_brightness = np.mean(gray)
+    
+    if use_histogram:
+        dark_threshold = 50  # 亮度阈值
+        dark_ratio = np.sum(gray < dark_threshold) / gray.size
+        # 计算亮度直方图
+        hist = cv2.calcHist([gray], [0], None, [256], [0, 256])
+        hist_norm = hist / hist.sum()  # 归一化直方图
+        # 计算累积分布函数(CDF)
+        cdf = hist_norm.cumsum()
+        # 使用CDF的形状来确定伽马值
+        # 如果暗区域像素较多，CDF在低亮度区域上升较快，应该使用较大的伽马值
+        dark_weight = cdf[dark_threshold]  # 暗区域的累积权重
+        # 根据暗区域权重和暗像素比例计算伽马值
+        gamma = gamma_min + (gamma_max - gamma_min) * (dark_ratio * 0.7 + dark_weight * 0.3)
+        gamma = min(gamma_max, max(gamma_min, gamma))  # 确保伽马值在指定范围内
+    else:
+        # 简单的基于平均亮度的自适应伽马值
+        # 亮度越低，伽马值越高
+        brightness_normalized = mean_brightness / 255.0
+        gamma = gamma_max - (gamma_max - gamma_min) * brightness_normalized
+    
+    print(f"图像平均亮度: {mean_brightness:.2f}, 自适应伽马值: {gamma:.2f}")
+    img_normalized = img.astype(np.float32) / 255.0
+    img_gamma_corrected = np.power(img_normalized, 1.0/gamma)
+    img_gamma_corrected = np.clip(img_gamma_corrected * 255.0, 0, 255).astype(np.uint8)
+    cv2.imwrite(output_path, img_gamma_corrected)
+    print(f"处理后的图像已保存到: {output_path}")
+    
+    # 显示处理前后的对比图
+    if show_result:
+        plt.figure(figsize=(12, 6))
+        
+        plt.subplot(1, 2, 1)
+        plt.title('原始图像')
+        plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+        plt.axis('off')
+        
+        plt.subplot(1, 2, 2)
+        plt.title(f'伽马矫正后 (γ={gamma:.2f})')
+        plt.imshow(cv2.cvtColor(img_gamma_corrected, cv2.COLOR_BGR2RGB))
+        plt.axis('off')
+        
+        plt.tight_layout()
+        plt.show()
+    
+    return img_gamma_corrected
+
+def weighted_adaptive_gamma_correction(image_path, output_path, gamma_min=1.0, gamma_max=2.5):
+    """
+    使用加权自适应伽马矫正方法增强图像
+    这种方法对图像不同区域应用不同的伽马值
+    
+    参数:
+        image_path: 输入图像路径
+        output_path: 输出图像路径
+        gamma_min: 最小伽马值
+        gamma_max: 最大伽马值
+    """
+    # 读取图像
+    img = cv2.imread(image_path)
+    
+    if img is None:
+        print(f"无法读取图像: {image_path}")
+        return None
+    
+    # 转换为灰度图用于计算亮度
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    
+    # 创建亮度权重图 - 暗区域需要更大的伽马值
+    # 将亮度值从[0,255]映射到[gamma_max,gamma_min]
+    # 即亮度为0的像素使用gamma_max，亮度为255的像素使用gamma_min
+    gamma_map = gamma_max - (gamma_max - gamma_min) * (gray / 255.0)
+    
+    # 标准化图像像素值到[0,1]范围
+    img_normalized = img.astype(np.float32) / 255.0
+    
+    # 创建输出图像
+    result = np.zeros_like(img_normalized)
+    
+    # 对每个通道应用像素级自适应伽马矫正
+    for i in range(3):  # BGR三个通道
+        channel = img_normalized[:,:,i]
+        # 对每个像素应用不同的伽马值
+        result[:,:,i] = np.power(channel, 1.0/gamma_map)
+    
+    # 转换回[0,255]的范围并转为8位整型
+    result = np.clip(result * 255.0, 0, 255).astype(np.uint8)
+    
+    # 保存结果图像
+    cv2.imwrite(output_path, result)
+    print(f"处理后的图像已保存到: {output_path}")
+    
+    return result
+
+def main():
+    # 输入图像路径
+    input_images = ["./low_light_1.jpg", "./low_light_2.jpg"]
+    
+    # 输出图像路径
+    output_images = ["ll_res_1.3_gamma.png", "ll_res_2.3_gamma.png"]
+    
+    # 确保输出目录存在
+    for output_path in output_images:
+        output_dir = os.path.dirname(output_path)
+        if output_dir and not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+    
+    # 处理每个图像
+    for i, (input_path, output_path) in enumerate(zip(input_images, output_images)):
+        print(f"\n处理图像 {i+1}/{len(input_images)}: {input_path}")
+        
+        # 使用基于直方图的自适应伽马矫正
+        adaptive_gamma_correction(input_path, output_path, 
+                                 gamma_min=1.0, gamma_max=2.5, 
+                                 use_histogram=True, show_result=False)
+
+if __name__ == "__main__":
+    main()
+
+file_3: hist_rgb.py
+
+import cv2
+import numpy as np
+
+def rgb_brightness_equalization(image_path, output_path):
+    """
+    使用RGB像素亮度进行直方图均衡化
+    
+    参数:
+        image_path: 输入图像路径
+        output_path: 输出图像路径
+    """
+
+    img = cv2.imread(image_path)
+    if img is None:
+        print(f"无法读取图像: {image_path}")
+        return
+    img_float = img.astype(np.float32) / 255.0   
+    # 计算灰度图像（亮度）
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    gray_equalized = cv2.equalizeHist(gray)
+    
+    # 计算每个像素的亮度增益比例
+    # 避免除零错误
+    epsilon = 1e-6
+    gray_float = gray.astype(np.float32) / 255.0
+    gray_eq_float = gray_equalized.astype(np.float32) / 255.0
+    
+    # 计算亮度比例因子
+    ratio = np.zeros_like(gray_float)
+    mask = gray_float > epsilon
+    ratio[mask] = gray_eq_float[mask] / gray_float[mask]
+    ratio[~mask] = 1.0  # 对于非常暗的像素，使用1作为默认比例
+    
+    # 限制比例因子的范围，防止过度增强
+    ratio = np.clip(ratio, 0.2, 3.0)
+    
+    # 对每个通道应用亮度比例因子
+    img_result = np.zeros_like(img_float)
+    for i in range(3):  # 对BGR三个通道分别处理
+        img_result[:,:,i] = img_float[:,:,i] * ratio
+    
+    # 将结果裁剪到[0,1]范围并转换回8位图像
+    img_result = np.clip(img_result * 255, 0, 255).astype(np.uint8)
+    
+    # 保存结果图像
+    cv2.imwrite(output_path, img_result)
+    print(f"处理后的图像已保存到: {output_path}")
+
+def main():
+    # 输入图像路径
+    input_images = ["./low_light_1.jpg", "./low_light_2.jpg"]
+    
+    # 输出图像路径
+    output_images = ["ll_res_1.1_rgb.png", "ll_res_2.1_rgb.png"]
+    
+    # 处理每个图像
+    for i, (input_path, output_path) in enumerate(zip(input_images, output_images)):
+        print(f"处理图像 {i+1}/{len(input_images)}: {input_path}")
+        rgb_brightness_equalization(input_path, output_path)
+
+if __name__ == "__main__":
+    main()
+
+file_4: 1.hist_yuv.py
+
+import cv2
+import numpy as np
+import os
+
+def histogram_equalization(image_path, output_path):
+    """
+    对输入图像进行直方图均衡化处理
+    
+    参数:
+        image_path: 输入图像路径
+        output_path: 输出图像路径
+    """
+    # 读取图像
+    img = cv2.imread(image_path)
+    
+    if img is None:
+        print(f"无法读取图像: {image_path}")
+        return
+    
+    # 将图像从BGR转换为YUV颜色空间
+    img_yuv = cv2.cvtColor(img, cv2.COLOR_BGR2YUV)
+    # 进行直方图均衡化
+    img_yuv[:,:,0] = cv2.equalizeHist(img_yuv[:,:,0])
+    img_output = cv2.cvtColor(img_yuv, cv2.COLOR_YUV2BGR)
+    cv2.imwrite(output_path, img_output)
+    print(f"处理后的图像已保存到: {output_path}")
+    # 显示对比结果
+    # compare_images(img, img_output, "原图", "均衡化后")
+
+def compare_images(img1, img2, title1, title2):
+    """
+    显示两张图像进行对比
+    """
+    cv2.imshow(title1, img1)
+    cv2.imshow(title2, img2)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+def main():
+    input_images = ["./low_light_1.jpg", "./low_light_2.jpg"]
+    output_images = ["ll_res_1.1_yuv.png", "ll_res_2.1_yuv.png"]
+    # 处理每个图像
+    for i, (input_path, output_path) in enumerate(zip(input_images, output_images)):
+        print(f"处理图像 {i+1}/{len(input_images)}: {input_path}")
+        histogram_equalization(input_path, output_path)
+
+if __name__ == "__main__":
+    main()
+
+
+
+4. 源代码对应的输出文件目录，你需要利用相对路径来插入python代码中展示的图像，补充结果分析部分。

@@ -175,7 +175,7 @@
 \xiaosihao\song
 
 \begin{titlepage}
-\center{\yihao{\hwxk{电子科技大学\underline{计算机科学与工程}学院}}}
+\center{\yihao{\hwxk{电子科技大学\underline{自动化}学院}}}
 \vspace{6cm}
 \center{\xiaochuhao{\kaishu{\bfseries 实~验~报~告}}}
 \vspace{4cm}
@@ -183,13 +183,13 @@
 \begin{center}
 \begin{large}
 \begin{tabular}{rc}
-\xiaoerhao{\hei{学\qquad 号}}& \hspace{1.7cm}\xiaoerhao{\hei{2020080903009\hspace{1.7cm}}} \\
+\xiaoerhao{\hei{学\qquad 号}}& \hspace{1.7cm}\xiaoerhao{\hei{202422080235\hspace{1.7cm}}} \\
 \cline{2-2}\\
 \xiaoerhao{\hei{姓\qquad 名}}& \xiaoerhao{\hei{李皓}}\\
 \cline{2-2}\\
-\xiaoerhao{\hei{（实验）课程名称}}& \xiaoerhao{\hei{实验一~图像预处理}}\\
+\xiaoerhao{\hei{（实验）课程名称}}& \xiaoerhao{\hei{实验一~低照度图像增强}}\\
 \cline{2-2}\\
-\xiaoerhao{\hei{教师}}& \xiaoerhao{\hei{任亚洲}}\\
+\xiaoerhao{\hei{教师}}& \xiaoerhao{\hei{于力}}\\
 \cline{2-2}\\
 
 \end{tabular}
@@ -203,7 +203,7 @@
 
 \centerline{\\[20bp]\yihao{\fs{实  ~~~~ 验  ~~~~ 报  ~~~~ 告}}}
 
-\leftline{\\[10bp]\sihao{\hei{\hspace{1.5em} 学生姓名：李皓 \hfill 学号：2020080903009 \hfill 指导教师：任亚洲 }}}
+\leftline{\\[10bp]\sihao{\hei{\hspace{1.5em} 学生姓名：李皓 \hfill 学号：202422080235 \hfill 指导教师：于力 }}}
 
 % \leftline{\\[10bp]\sihao{\hei{\hspace{1.5em} 实验地点：信软楼西XXX \hfill }}}
 
@@ -211,27 +211,225 @@
 
 \setlength{\parskip}{0bp}  %定义段间距
 
-\section{实验名称: 图像预处理}
-% \section{实验学时: ~4}
+\section{实验名称: 低照度图像增强}
+
 \section{实验目的:}
+\begin{enumerate}
+    \item 理解并掌握多种低照度图像增强算法的原理与实现
+    \item 对比分析直方图均衡化、自适应直方图均衡化(CLAHE)和伽马校正等方法在低照度图像增强中的效果
+    \item 探究不同算法对图像亮度、对比度和细节保留的影响
+\end{enumerate}
 
 \section{实验原理:}
+\subsection{直方图均衡化 (Histogram Equalization)}
+直方图均衡化是一种常用的图像增强方法，其基本原理是将图像的灰度直方图从集中分布转变为均匀分布，提高图像整体对比度。对于低照度图像，该方法可以有效增强暗部细节。在YUV色彩空间中，仅对Y通道（亮度通道）进行均衡化，保持色彩信息不变，可以避免色彩失真问题。
+
+其数学表达式为：
+\begin{equation}
+g(x,y) = T[f(x,y)] = \sum_{j=0}^{f(x,y)} \frac{n_j}{n}
+\end{equation}
+
+其中，$f(x,y)$为原始图像，$g(x,y)$为均衡化后的图像，$n_j$为灰度级为$j$的像素数量，$n$为图像总像素数。直方图均衡化可以在RGB像素空间和YUV像素空间进行操作，对于RGB图像可以计算其灰度图，并且按比例增强RGB各个通道的像素强度。对于YUV空间下的直方图均衡化，只需将RGB图像格式转为YUV格式，分离亮度信息(Y)与色度信息(U,V)，只对Y通道进行均衡化，保持U、V通道不变。
+\subsection{自适应直方图均衡化 (CLAHE)}
+CLAHE (Contrast Limited Adaptive Histogram Equalization) 是直方图均衡化的改进版本。它将图像分割成若干小区域（称为“tiles”），对每个小区域分别进行直方图均衡化，并引入对比度限制机制（clip limit）防止噪声被过度放大。最后通过双线性插值来消除相邻区域间的人工边界。
+
+在低照度图像处理中，CLAHE能够更好地保留局部细节，避免全局均衡化可能导致的过度增强和细节丢失问题。在YUV色彩空间中仅对Y通道进行处理可以保持色彩的自然度。分块操作的思想能够保证图像的相对暗部和相对亮部都具有原有的明暗对比，但是也会导致分块之间的亮度关系不自然。
+
+\subsection{伽马校正 (Gamma Correction)}
+伽马校正是一种非线性变换，用于调整图像的亮度和对比度。其基本形式为：
+\begin{equation}
+I_{out} = I_{in}^{\frac{1}{\gamma}}
+\end{equation}
+
+其中，$I_{in}$和$I_{out}$分别为输入和输出图像的像素值（归一化到[0,1]范围），$\gamma$为伽马值：
+\begin{itemize}
+    \item $\gamma < 1$: 增亮图像，增强暗部细节
+    \item $\gamma > 1$: 降低图像亮度，增强亮部细节
+    \item $\gamma = 1$: 保持原图像不变
+\end{itemize}
+
+自适应伽马校正是伽马校正的一种改进，它根据图像的亮度分布或区域特性动态调整伽马值，使得不同区域获得最佳的增强效果。这种方法特别适合于处理亮度分布不均的低照度图像。
+
+具体而言，首先将RGB图像转为灰度图像，最后计算亮度直方图，归一化之后计算其累计分布函数（CDF）。基于分布函数来确定暗区权重和暗部像素比例，最后利用公式：
+
+$$\gamma = \gamma_{min} + (\gamma_{max} - \gamma_{min}) * (darkratio * 0.7 + darkweight * 0.3)$$
+
+计算最终的$\gamma$值，随后应用到图像变换上。
 
 \section{实验内容:}
+本实验实现并对比了三种低照度图像增强算法：
+\begin{enumerate}
+    \item 基于不同色彩空间的直方图均衡化
+    \item 基于YUV色彩空间的CLAHE（对比度受限的自适应直方图均衡化）
+    \item 自适应伽马校正
+\end{enumerate}
+
+通过对比分析这些算法在不同低照度图像上的表现，探究它们各自的优缺点及适用场景。
 
 \section{实验设备:}
+\begin{itemize}
+    \item 硬件: i5-13500 ，32GB RAM
+    \item 软件: Python 3.11, OpenCV, NumPy, Matplotlib 等
+\end{itemize}
 
 \section{实验步骤:}
+\subsection{基于YUV色彩空间的直方图均衡化}
+\begin{enumerate}
+    \item 读取低照度图像，并将其从BGR转换为YUV色彩空间
+    \item 分离YUV三个通道，仅对Y通道（亮度）进行直方图均衡化处理
+    \item 合并处理后的Y通道与原始的U、V通道
+    \item 将结果从YUV转换回BGR色彩空间并保存
+\end{enumerate}
+
+代码实现:
+\lstinputlisting[linewidth=\textwidth]{code1.py}
+
+\subsection{基于YUV色彩空间的CLAHE}
+\begin{enumerate}
+    \item 读取低照度图像，并将其从BGR转换为YUV色彩空间
+    \item 分离YUV三个通道
+    \item 创建CLAHE对象，设置对比度限制参数(clipLimit)和网格大小(tileGridSize)
+    \item 对Y通道应用CLAHE处理
+    \item 合并处理后的Y通道与原始的U、V通道
+    \item 将结果从YUV转换回BGR色彩空间并保存
+\end{enumerate}
+
+代码实现:
+\lstinputlisting[linewidth=\textwidth]{code2.py}
+
+\subsection{自适应伽马校正}
+\begin{enumerate}
+    \item 读取低照度图像，并转换为灰度图用于计算亮度统计
+    \item 分析图像亮度直方图特性，如暗区域像素比例、亮度累积分布等
+    \item 根据分析结果动态计算适合的伽马值，保证在预设的范围内(γ\_min到γ\_max)
+    \item 将图像归一化到[0,1]范围，应用计算得到的伽马值进行校正
+    \item 将结果转换回[0,255]范围并保存
+\end{enumerate}
+
+代码实现:
+\lstinputlisting[linewidth=\textwidth]{code1.py}
 
 \section{实验结果与分析:}
+\subsection{实验结果}
+
+本实验对两张低照度图像样本进行了处理，分别使用三种不同的算法进行增强，得到以下结果：
+
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.7\textwidth]{./low_light_1.jpg}
+  \caption{原始低照度图像1}
+\end{figure}
+\newpage
+
+\begin{figure}[htbp]
+  \centering
+  \subfigure[直方图均衡化 (YUV)]{
+    \begin{minipage}{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{./ll_res_1.1_yuv.png}
+    \end{minipage}
+  }
+  \subfigure[CLAHE]{
+    \begin{minipage}{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{./ll_res_1.2_yuv.png}
+    \end{minipage}
+  }
+  
+  \subfigure[直方图均衡化 (RGB)]{
+    \begin{minipage}{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{./ll_res_1.1_rgb.png}
+    \end{minipage}
+  }
+  \subfigure[自适应伽马校正]{
+    \begin{minipage}{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{./ll_res_1.3_gamma.png}
+    \end{minipage}
+  }
+  \caption{不同算法对图像1的处理结果对比}
+\end{figure}
+
+对于第一张图，我首先使用 YUV 通道下的直方图均衡化操作，但是出现整体亮度偏移的问题，如图2（a）所示，猜测是 YUV 的亮度空间均衡化导致。因此改用 RGB 空间下的直方图均衡化操作，RGB均衡化操作的图像观感好于YUV通道的图像，但是仍然存在局部过曝的问题。为此，我又尝试使用自适应直方图均衡化方法进行处理。该方法得到的图像如图2（b）所示，由于区域处理的方法，使得光照调整被限制在局部的区域中，不会使得整体的亮度有偏移，在观感上比直接使用直方图均衡化要好。最后我尝试了使用自适应伽马矫正的方法， 从整体调整图像的亮度映射，虽然解决分块割裂的问题，但是画面发灰，观感不佳。
+\newpage
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.7\textwidth]{./low_light_2.jpg}
+  \caption{原始低照度图像2}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \subfigure[直方图均衡化 (YUV)]{
+    \begin{minipage}{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{./ll_res_2.1_yuv.png}
+    \end{minipage}
+  }
+  \subfigure[CLAHE]{
+    \begin{minipage}{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{./ll_res_2.2_yuv.png}
+    \end{minipage}
+  }
+  
+  \subfigure[直方图均衡化 (RGB)]{
+    \begin{minipage}{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{./ll_res_2.1_rgb.png}
+    \end{minipage}
+  }
+  \subfigure[自适应伽马校正]{
+    \begin{minipage}{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{./ll_res_2.3_gamma.png}
+    \end{minipage}
+  }
+  \caption{不同算法对图像2的处理结果对比}
+\end{figure}
+
+
+对于第二章图，我使用和第一张图相同的处理方法，结果发现两种直方图均衡化操作都将图像的噪声放大，画面的观感非常不好，可能是由于均衡化操作加强了暗部的噪点。使用自适应直方图均衡化操作有效减少了这个现象，但是分块之间的亮度差异仍然很明显。在图1中观感不好的自适应伽马矫正方法则效果不错，既没有出现噪点，也没有断层，还有效增强了暗部的细节和亮度，在三种处理方法中效果最好。
+
+\subsubsection{直方图均衡化}
+\begin{itemize}
+    \item \textbf{优点}: 实现简单，计算效率高，能有效提升图像整体对比度
+    \item \textbf{缺点}: 容易导致过度增强，亮度上的差距过大使得画面整体出现过曝现象，细节丢失，在“大气大为”处的处理都不同程度出现过曝现象。
+    \item \textbf{观察结果}: 处理后的图像亮度显著提高，但亮部区域严重过曝，细节丢失，同时噪点被放大，在图4中的两种方法都出现了噪声加强。
+\end{itemize}
+
+\subsubsection{CLAHE (自适应直方图均衡化)}
+\begin{itemize}
+    \item \textbf{优点}: 分块处理能够保留更多局部细节，对比度限制机制可以抑制噪声放大。
+    \item \textbf{缺点}: 处理后的图像在分块边界处可能存在不自然的过渡，需要合理设置网格大小和对比度限制参数。未来可以多尝试不同的参数组合，探索最好的增强效果。
+    \item \textbf{观察结果}: 暗部细节得到很好保留，亮部没有严重过曝，但在某些区域的边界处存在不自然的过渡效果。
+\end{itemize}
+
+\subsubsection{自适应伽马校正}
+\begin{itemize}
+    \item \textbf{优点}: 基于图像特性动态调整伽马值，能够在保留细节的同时提升亮度，效果自然。
+    \item \textbf{缺点}: 算法相对复杂，需要精心调整伽马值范围参数，对不同类型的低照度图像效果不一。使用自适应的参数在某些情况下有较好的效果（月亮图片）。
+    \item \textbf{观察结果}: 图像亮度得到适度提升，整体效果自然，细节保留良好，同时没有明显的噪点放大现象
+\end{itemize}
 
 \section{总结及心得体会:}
+通过本次实验，我深入理解了多种低照度图像增强算法的原理与实现方法。实验结果表明，不同算法有其各自的优势和局限性：
 
-在本次实验中，我基本掌握和复现了常用的图像操作算法。并且通过前后图像对比，直观认识了不同处理方法的效果以及特点。在这一基础上，我在直方图均衡化这一方面展开研究，并且复现了CLAHE代码。
+\begin{enumerate}
+    \item 直方图均衡化虽然简单有效，但容易导致过度增强和细节丢失，适用于对细节要求不高的场景。
+    \item CLAHE通过分块处理和对比度限制，在提升亮度的同时能够更好地保留局部细节，但需要合理设置参数以避免分块边界效应。
+    \item 自适应伽马校正考虑了图像亮度分布特性，能够产生更加自然的增强效果，保留细节的同时不会引入明显的噪声。
+\end{enumerate}
 
-在本次图像基本操作的实验中，我加深了对一些常见图像处理方法的认知，锻炼了自己的编码能力。在基本要求的基础上，我还寻找了直方图均衡化的创新算法：CLAHE，对课内知识做了补充。在这一过程中，我锻炼了自己信息检索的能力，以及阅读相关文献资料的能力。
+在实际应用中，应根据具体场景和需求选择合适的算法。对于要求高质量的场景，可以考虑将CLAHE与自适应伽马校正结合使用，先用CLAHE提升局部对比度，再用自适应伽马校正调整整体亮度，从而获得更好的效果。
+
+此外，低照度图像增强中的一个关键挑战是噪声放大问题，未来可以考虑将去噪算法与增强算法结合，以获得更好的综合效果。
 
 \section{对本实验过程及方法、手段的改进建议:}
+ 可以尝试多种算法的组合使用，例如先进行自适应伽马校正后再应用CLAHE，或者在不同的亮度区域应用不同的算法。
 
 \vspace{4cm}
 \begin{flushright}

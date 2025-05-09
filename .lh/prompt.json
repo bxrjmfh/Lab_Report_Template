@@ -1,0 +1,18 @@
+{
+    "sourceFile": "prompt",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1746675808004,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1746675808004,
+            "name": "Commit-0",
+            "content": "我会给你几份材料，你应该基于材料为我写一份 latex 格式的实验报告，材料包含：\r\n1. 实验内容\r\n\r\n任务1 低照度图像增强\r\n\r\n- 直方图均衡化（Histogram Equalization） 亮度上的差距太大，导致画面整体过曝\r\n- 自适应直方图均衡化（CLAHE） 分块处理之后的效果不错，暗部保留细节，亮部没有过曝，但是存在界限上的差异\r\n- 基于伽马校正（Gamma Correction）\r\n\r\n2. Latex 实验报告模板（仅仅包含章节）\r\n\r\n\\section{实验名称: xx}\r\n% \\section{实验学时: ~4}\r\n\\section{实验目的:}\r\n\r\n\\section{实验原理:}\r\n\r\n\\section{实验内容:}\r\n\r\n\\section{实验设备:}\r\n\r\n\\section{实验步骤:}\r\n\r\n\\section{实验结果与分析:}\r\n\r\n\\section{总结及心得体会:}\r\n\r\n\\section{对本实验过程及方法、手段的改进建议:}\r\n\r\n3. 源代码，实现了所有的算法，基于出现的算法补充Latex实验报告，体现逐步探索和对比的过程\r\n\r\n\r\n4. 源代码对应的输出文件目录，你需要利用相对路径来插入python代码中展示的图像，补充结果分析部分。"
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "sourceFile": "code2.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1746693700368,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1746693700368,
+            "name": "Commit-0",
+            "content": "def clahe_yuv_enhancement(image_path, output_path, clip_limit=2.0, tile_grid_size=(4, 4)):\r\n    \"\"\"\r\n    在YUV色彩空间中使用CLAHE方法进行图像增强\r\n    \r\n    参数:\r\n        image_path: 输入图像路径\r\n        output_path: 输出图像路径\r\n        clip_limit: CLAHE的对比度限制参数，默认为2.0\r\n        tile_grid_size: CLAHE的网格大小，默认为8x8\r\n    \"\"\"\r\n    # 读取图像\r\n    img = cv2.imread(image_path)\r\n    \r\n    if img is None:\r\n        print(f\"无法读取图像: {image_path}\")\r\n        return\r\n    \r\n    # 将图像从BGR转换为YUV颜色空间\r\n    img_yuv = cv2.cvtColor(img, cv2.COLOR_BGR2YUV)\r\n    y, u, v = cv2.split(img_yuv)\r\n    \r\n    # 创建CLAHE对象\r\n    clahe = cv2.createCLAHE(clipLimit=clip_limit, tileGridSize=tile_grid_size)\r\n    \r\n    # 对Y通道应用CLAHE\r\n    y_clahe = clahe.apply(y) \r\n    # 合并通道\r\n    img_yuv_enhanced = cv2.merge([y_clahe, u, v])\r\n    img_enhanced = cv2.cvtColor(img_yuv_enhanced, cv2.COLOR_YUV2BGR)\r\n    \r\n    # 保存结果图像\r\n    cv2.imwrite(output_path, img_enhanced)\r\n    print(f\"处理后的图像已保存到: {output_path}\")\r\n    \r\n    return img_enhanced"
+        }
+    ]
+}
